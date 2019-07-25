@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+        <div class="card mt-5">
+          <div class="card-header bg-dark">
+            <div class="ml-3 mt-2" style="color: white;">
+              <h4>Nouveau Matériel</h4>
+              <p>Détails</p>
+            </div> 
+          </div>
+          <div class="card-body">
+                <form [formGroup]="materielForm" (ngSubmit)="onSaveMateriel()">
+                    <div class="form-group">
+                      <label for="designMateriel">Désignation</label>
+                      <input type="text" id="designMateriel" class="form-control" formControlName="designMateriel">
+                    </div>
+                    <div class="form-group">
+                      <label for="puMateriel">Prix</label>
+                      <input type="text" id="puMateriel" class="form-control" formControlName="puMateriel">
+                    </div>
+                    <div class="form-group">
+                        <label>Photo</label><br/>
+                        <input type="file" accept="image/*" (change)="detectFile($event)">
+                        <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
+                    </div>
+                    <button type="submit" class="btn btn-dark" [disabled]="materielForm.invalid || fileIsUploading">
+                      Soumettre
+                    </button>
+                </form>
+             </div>
+             <div class="card-footer">
+                 <button class="btn btn-dark center-block" (click)="onMateriels()">Retour</button>
+             </div>
+          </div>
+    </div>
+  </div>
+  <div class="col-md-3 mt-5">
+     
+  </div>
+</div>

@@ -1,10 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
-.top-bar {
+/*.top-bar {
     position: absolute;
-    /*bottom: 0;*/
+    /*bottom: 0;
     width:100%;
     height: 70px;
     background-color: blue;
     text-align: center;
     color: white;
+}*/
+
+.image-table{
+    height: 50px;
+    width: 50px;
+}
+
+.image-apercu{
+    height: 500px;
+    width: 500px;
 }
