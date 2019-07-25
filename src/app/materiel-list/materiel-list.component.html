@@ -11,23 +11,40 @@
           <div class="card-body">  
               <table class="table table-striped table-hover table-sm">
                   <thead class="thead-dark">
-                  <tr>
+                  <tr class="content-table-center">
                     <th>Reférence</th>
                     <th>Désignation</th>
                     <th>Prix Unitaire</th>
                     <th>Photo</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
-                  <tr *ngFor="let materiel of materiels | async" (click)="showImageMateriel(materiel.refMateriel)">
+                  <tr class="content-table-center" *ngFor="let materiel of materiels | async">
                     <td>{{materiel.refMateriel}}</td>
                     <td>{{materiel.designMateriel}}</td>
                     <td>{{materiel.puMateriel}}</td>
                     <td>
-                      <img class="image-table img-fluid img-thumbnail " src="{{this.materielService.baseUrl+'/'+materiel.refMateriel+'/imagemateriel'}}"/>
+                      <img class="image-table img-fluid img-thumbnail rounded" src="{{this.materielService.baseUrl+'/'+materiel.refMateriel+'/imagemateriel'}}"
+                      (click)="showImageMateriel(materiel.refMateriel)"/>
                     </td>
-                    <td></td>
+                    <td>
+                      <button class="btn btn-sm btn-light">View</button>&nbsp;
+                      <button class="btn btn-sm btn-light">Edit</button>&nbsp;
+                      <button class="btn btn-sm btn-light">Delete</button>
+                    </td>
                   </tr>
-                </table>        
+                </table>       
+                <!--begin top Pagination-->
+                <nav>
+                  <ul class="pagination justify-content-center">
+                      <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                      <li class="page-item active"><a class="page-link bg-dark" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                  </ul>
+              </nav>
+              <!--end top Pagination--> 
           </div>
           <div class="card-footer">
             <button class="btn btn-dark" (click)="onNewMateriel()">
@@ -38,11 +55,17 @@
         </div>
   </div>
   <div class="col-md-3 mt-5">
-      <!-- <div class="card mt-5" *ngIf="imageExist">
-          <div class="card-body"> -->
-              <img *ngIf="imageExist" class="image-apercu img-fluid" src="{{this.materielService.baseUrl+'/'+this.id+'/imagemateriel'}}"/>
-         <!--  </div>
-        </div> -->
+        <section class="card" *ngIf="imageExist">
+          <img *ngIf="imageExist" class="card-img-top" src="{{this.materielService.baseUrl+'/'+this.id+'/imagemateriel'}}"/>
+          <div class="card-body">
+            <h3 class="card-title">{{ fileName }}</h3>
+            <p class="card-text">
+              Cette photo est parfaite pour être affichée dans ce cadre. 
+              N'est ce pas vrai ?
+            </p>
+            <a href="#" class="btn btn-sm btn-dark">Voir détail</a>
+          </div>
+        </section>
   </div>
 </div><br/>
 <div class="row">

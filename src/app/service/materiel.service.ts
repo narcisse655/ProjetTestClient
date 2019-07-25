@@ -49,5 +49,9 @@ export class MaterielService {
     return this.httpClient.post(this.baseUrl+'/uploadFile', formData);
   }
 
+  getImageDetails(id: number): Observable<Object>{
+    return this.httpClient.get(this.baseUrl+'/'+id+'/imagedetails');
+  }
+
 
 }

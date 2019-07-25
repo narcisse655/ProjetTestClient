@@ -14,6 +14,8 @@ export class MaterielListComponent implements OnInit {
   materiels: Observable<Materiel[]>
   public id: number;
   imageExist: boolean = false;
+  dataFile: { id: "", fileName: "", fileType: "" };
+  fileName: string;
 
   constructor(private materielService: MaterielService, private router: Router) { }
 
@@ -24,6 +26,15 @@ export class MaterielListComponent implements OnInit {
   showImageMateriel(id:number){
     if (id!=null){
       this.imageExist = true;
+      this.materielService.getImageDetails(id).subscribe(
+        (data) => {
+          this.dataFile = JSON.parse(JSON.stringify(data));
+          let name = this.dataFile.fileName;
+          let splitChaine = name.split('.');
+          this.fileName = splitChaine[0];
+          console.log("Nom de l'image: "+this.fileName);
+        }
+      );
     }
     this.id = id;
     console.log('showImageMateriel('+id+'): id = '+id);
