@@ -1,3 +1,39 @@
-<p>
-  materiel-details works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="card mt-5">
+        <div class="card-header bg-dark">
+          <div class="ml-3 mt-2" style="color: white;">
+            <h4>Détails Matériel</h4>
+            <p>Détails</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <h1>{{ materiel.designMateriel }}</h1>
+          <div class="form-group">
+              <label class="bold">Photo: </label><br>
+              <p>
+                <img class="image-detail img-fluid img-thumbnail rounded"
+                  [src]="this.materielService.baseUrl+'/downloadFile/'+materiel.fileName | secure | async" /><br />
+                <span>{{ materiel.fileName }}</span>
+              </p>
+            </div>
+          <div class="form-group">
+            <label class="bold">Prix Unitaire:</label>
+            <p>{{ materiel.puMateriel | money:' FCFA' }}</p>
+          </div>
+          <div class="form-group">
+            <label class="bold">Description:</label><br />
+            <p>{{ materiel.description }}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-dark center-block" (click)="goToMateriels()">Retour</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mt-5">
+
+  </div>
+</div>

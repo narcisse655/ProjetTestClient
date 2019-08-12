@@ -1,14 +1,20 @@
 <div class="container">
 <div class="row">
   <div class="col-md-9">
-      <div class="card mt-5">
+      <div class="card mt-3"><!--card-->
           <div class="card-header bg-dark">
               <div class="ml-3 mt-2" style="color: white;">
                 <h4>Liste Matériels</h4>
                 <p>Détails</p>
               </div> 
           </div>
-          <div class="card-body">  
+          <div class="alert alert-primary" role="alert" *ngIf="hide">
+            <strong>Chargement ...</strong>
+          </div>
+          <div class="alert alert-success" role="alert" *ngIf="errorMessage">
+            <strong>{{ errorMessage }}</strong>
+          </div>
+          <div class="card-body" *ngIf="!hide"><!--card body-->  
               <table class="table table-striped table-hover table-sm">
                   <thead class="thead-dark">
                   <tr class="content-table-center">
@@ -17,53 +23,73 @@
                     <th>Prix Unitaire</th>
                     <th>Photo</th>
                     <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tr class="content-table-center" *ngFor="let materiel of materiels | async">
-                    <td>{{materiel.refMateriel}}</td>
+                  </tr> 
+                  </thead> 
+                  <tr class="content-table-center" *ngFor="let materiel of _materiels; let i=index;">
+                    <td>{{materiel.refMateriel}}</td> 
                     <td>{{materiel.designMateriel}}</td>
-                    <td>{{materiel.puMateriel}}</td>
+                    <td>{{materiel.puMateriel | money:' FCFA'}}</td>
                     <td>
-                      <img class="image-table img-fluid img-thumbnail rounded" src="{{this.materielService.baseUrl+'/'+materiel.refMateriel+'/imagemateriel'}}"
-                      (click)="showImageMateriel(materiel.refMateriel)"/>
+                      <img class="image-table img-fluid img-thumbnail rounded" [src]="this.materielService.baseUrl+'/downloadFile/'+materiel.fileName | secure | async"
+                      (click)="showImageMateriel(materiel.fileName, materiel.description)"/>
+                      
+                      <!-- <div class="clickable" (click)="onDownloadFile(materiel.fileName)">Image</div>
+                      <img class="image-table img-fluid img-thumbnail rounded" [src]="file"/> -->
                     </td>
                     <td>
-                      <button class="btn btn-sm btn-light">View</button>&nbsp;
+                      <button class="btn btn-sm btn-light" (click)="onViewMateriel(materiel.refMateriel)">View</button>&nbsp;
                       <button class="btn btn-sm btn-light">Edit</button>&nbsp;
-                      <button class="btn btn-sm btn-light">Delete</button>
+                      <button class="btn btn-sm btn-light" (click)="onDeleteMateriel(materiel.refMateriel)">Delete</button>
                     </td>
                   </tr>
-                </table>       
+                </table>    
                 <!--begin top Pagination-->
-                <nav>
-                  <ul class="pagination justify-content-center">
-                      <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-                      <li class="page-item active"><a class="page-link bg-dark" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                  </ul>
-              </nav>
-              <!--end top Pagination--> 
-          </div>
-          <div class="card-footer">
-            <button class="btn btn-dark" (click)="onNewMateriel()">
-              Nouveau
-            <span><i class="fas fa-plus"></i></span>
-          </button> 
-          </div>
-        </div>
+              <!--<nav>
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                  <li class="page-item active"><a class="page-link bg-dark" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
+              </nav> -->   
+          </div><!--end card body-->  
+
+          <div class="card-footer"><!--card footer-->  
+            <div class="row">
+              <div class="col-12">
+                <nav> <!--begin top Pagination-->
+                    <ul class="pagination justify-content-md-center">
+                        <li class="page-item" [ngClass]="{ 'disabled':page==0  }"><a class="page-link" href="#">&laquo;</a></li>
+                        <div *ngFor="let p of pages; let i = index">
+                            <li class="page-item bg-dark" [ngClass]="{ 'active':i==page }">
+                                <a class="page-link" href="" (click)="onChangePage(i,$event)" >{{ i }}</a>
+                            </li>
+                        </div>
+                        <li class="page-item" [ngClass]="{ 'disabled':page==totalPages }"><a class="page-link" href="#">&raquo;</a></li>
+                    </ul>
+                </nav><!--end top Pagination-->   
+              </div><br/>  
+
+              <div class="col-12">
+                  <button class="btn btn-dark" (click)="onNewMateriel()"><!--button nouveau-->
+                      Nouveau
+                    <span><i class="fas fa-plus"></i></span>
+                  </button> <!--end button nouveau-->
+              </div>
+            </div>  
+          </div><!--end card footer-->  
+        </div><!--end card-->
   </div>
-  <div class="col-md-3 mt-5">
+  <div class="col-md-3 mt-3">
         <section class="card" *ngIf="imageExist">
-          <img *ngIf="imageExist" class="card-img-top" src="{{this.materielService.baseUrl+'/'+this.id+'/imagemateriel'}}"/>
+          <img (click)="onHideCard()" class="card-img-top" [src]="this.materielService.baseUrl+'/downloadFile/'+fileName | secure | async"/>
           <div class="card-body">
-            <h3 class="card-title">{{ fileName }}</h3>
+            <h3 class="card-title">{{ name }}</h3>
             <p class="card-text">
-              Cette photo est parfaite pour être affichée dans ce cadre. 
-              N'est ce pas vrai ?
+              {{ description }}
             </p>
-            <a href="#" class="btn btn-sm btn-dark">Voir détail</a>
+            <button href="#" class="btn btn-sm btn-dark">Voir détail</button><br/>
           </div>
         </section>
   </div>

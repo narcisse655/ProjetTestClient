@@ -9,6 +9,7 @@
     color: white;
 }*/
 
+/*materiel-list html*/
 .image-table{
     height: 50px;
     width: 50px;
@@ -21,4 +22,10 @@
 
 .content-table-center{
     text-align: center;
+}
+
+/*file-list html*/
+.image-gallery{
+    width: fit-content;
+    height: 50px;
 }

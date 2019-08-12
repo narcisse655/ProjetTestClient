@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-6">
+      <div class="card mt-5">
+        <div class="card-header bg-primary text-center bg-dark color-title-card">
+          <h4><strong>Authentification</strong></h4>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+          <div class="text-center">
+            <strong>{{ errorMessage }}</strong>
+          </div>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="materielList.error">
+          <div class="text-center">
+            <strong>{{ materielList.error }}</strong>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="signInForm" (ngSubmit)="onSignIn(signInForm.value)">
+            <div class="form-group">
+              <label for="username" class="control-label"><strong>Username</strong></label>
+              <input type="text" id="username" class="form-control" formControlName="username" (click)="onHideMessage()">
+            </div>
+            <div class="form-group">
+              <label for="password" class="control-label"><strong>password</strong></label>
+              <input type="password" id="password" class="form-control" formControlName="password" (click)="onHideMessage()">
+            </div>
+            <div (click)="onHideMessage()">
+              <button type="submit" class="btn btn-dark" [disabled]="signInForm.invalid">Connexion</button>
+            </div>
+            
+            
+            <!-- <button type="button" class="btn btn-dark" (click)="goToRegister()">Créer un compte</button> -->
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">&nbsp;</div>
+  </div>
+
+</div>

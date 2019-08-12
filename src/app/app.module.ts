@@ -3,13 +3,17 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterielCreateComponent } from './materiel-create/materiel-create.component';
 import { MaterielListComponent } from './materiel-list/materiel-list.component';
 import { MaterielDetailsComponent } from './materiel-details/materiel-details.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
-import { MaterielService } from './service/materiel.service';
+import { FileListComponent } from './file-list/file-list.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { MaterielService, AuthenticationService, UsersService } from './_services';
+import { AuthInterceptor, MoneyPipe, SecurePipe, ErrorInterceptor } from './_helpers';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,12 @@ import { MaterielService } from './service/materiel.service';
     MaterielCreateComponent,
     MaterielListComponent,
     MaterielDetailsComponent,
-    HeaderComponent
+    HeaderComponent,
+    FileListComponent,
+    LoginComponent,
+    RegisterComponent,
+    MoneyPipe,
+    SecurePipe
   ],
   imports: [
     BrowserModule,
@@ -26,7 +35,10 @@ import { MaterielService } from './service/materiel.service';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [MaterielService],
+  providers: [MaterielService, AuthenticationService, UsersService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

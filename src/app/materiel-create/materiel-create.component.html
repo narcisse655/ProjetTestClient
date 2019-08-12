@@ -9,7 +9,7 @@
             </div> 
           </div>
           <div class="card-body">
-                <form [formGroup]="materielForm" (ngSubmit)="onSaveMateriel()">
+                <form [formGroup]="materielForm" (ngSubmit)="onNewMateriel()"> 
                     <div class="form-group">
                       <label for="designMateriel">Désignation</label>
                       <input type="text" id="designMateriel" class="form-control" formControlName="designMateriel">
@@ -23,13 +23,17 @@
                         <input type="file" accept="image/*" (change)="detectFile($event)">
                         <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
                     </div>
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <textarea id="description" rows="3" class="form-control" formControlName="description"></textarea>
+                    </div>
                     <button type="submit" class="btn btn-dark" [disabled]="materielForm.invalid || fileIsUploading">
                       Soumettre
                     </button>
                 </form>
              </div>
              <div class="card-footer">
-                 <button class="btn btn-dark center-block" (click)="onMateriels()">Retour</button>
+                 <button class="btn btn-dark center-block" (click)="goToMateriels()">Retour</button>
              </div>
           </div>
     </div>
