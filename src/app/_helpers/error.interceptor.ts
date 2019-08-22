@@ -11,24 +11,26 @@ export class ErrorInterceptor implements HttpInterceptor {
     constructor(private authService: AuthenticationService, private router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('ErrorInterceptor Entree Event HttpResponse...');
+        console.log('Event HttpResponse...');
         return next.handle(request).pipe( 
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
-                    console.log('Current Users: '+this.authService.currentUser);
+                    //console.log('Current Users: '+this.authService.currentUser);
                     console.log('Event:==>> ', event);
                 }
                 return event;
             }),
             catchError(
                 (err: HttpErrorResponse) => {
-                    console.log('ErrorInterceptor Entree HttpErrorResponse...');
+                    //console.log('Entree HttpErrorResponse...');
                     //if(!this.authService.getAuth()){
                     //console.log(this.authService.currentUsers);
-                    if (!this.authService.isLoggedIn) {
-                        console.log('Error de ErrorInterceptor');
+                    let currentUser = localStorage.getItem('currentUser');
+                    /* if (!this.authService.currentUser) { */
+                    /* if (!currentUser) {
+                        console.log('Error de currentUser');
                         return this.error('Username or password is not correct');
-                    }
+                    } */
                     if (err.status === 403 || err.status === 401) {
                         console.log('catch error 403 ==>> signOut ==> redirect to login')
                         this.authService.signOut();

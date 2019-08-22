@@ -39,6 +39,7 @@ export class MaterielCreateComponent implements OnInit {
   }
 
   onNewMateriel(){
+    console.log('Create materiel ...');
     const designation = this.materielForm.get('designMateriel').value;
     const pu = this.materielForm.get('puMateriel').value;
     const prix = parseFloat(pu);
@@ -52,16 +53,20 @@ export class MaterielCreateComponent implements OnInit {
     console.log('designation: '+designation+' prix: '+prix+' fileName: '+this.fileName+' description: '+description);
 
     this.materielService.newMateriel(this.materiel).subscribe(
-      data => console.log('Nouveau materiel: '+JSON.stringify(data)), error => console.log(error)
+      data =>{
+        console.log('Nouveau materiel: '+JSON.stringify(data));
+      } , 
+      error => console.log(error)
     );
-    //this.materielService.getMaterielsList();
+    this.materiel = new Materiel("", undefined, "", "");
     this.router.navigate(['materiels']);
     this.materielList.ngOnInit();
+
 
   }
 
   onUploadFile(file: File){
-
+    console.log('Upload file ...');
     this.fileIsUploading = true;
     this.materielService.upLoadFile(file).subscribe(
       (data) => {

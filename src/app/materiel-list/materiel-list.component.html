@@ -1,50 +1,84 @@
 <div class="container">
-<div class="row">
-  <div class="col-md-9">
-      <div class="card mt-3"><!--card-->
-          <div class="card-header bg-dark">
-              <div class="ml-3 mt-2" style="color: white;">
-                <h4>Liste Matériels</h4>
-                <p>Détails</p>
-              </div> 
+  <div class="row">
+    <div class="col-md-9">
+      <div class="card mt-3">
+        <!--card-->
+        <div class="card-header bg-dark">
+          <div class="ml-3 mt-2" style="color: white;">
+            <h4>Liste Matériels</h4>
+            <p>Détails</p>
           </div>
-          <div class="alert alert-primary" role="alert" *ngIf="hide">
-            <strong>Chargement ...</strong>
-          </div>
-          <div class="alert alert-success" role="alert" *ngIf="errorMessage">
-            <strong>{{ errorMessage }}</strong>
-          </div>
-          <div class="card-body" *ngIf="!hide"><!--card body-->  
-              <table class="table table-striped table-hover table-sm">
-                  <thead class="thead-dark">
-                  <tr class="content-table-center">
-                    <th>Reférence</th>
-                    <th>Désignation</th>
-                    <th>Prix Unitaire</th>
-                    <th>Photo</th>
-                    <th>Action</th>
-                  </tr> 
-                  </thead> 
-                  <tr class="content-table-center" *ngFor="let materiel of _materiels; let i=index;">
-                    <td>{{materiel.refMateriel}}</td> 
-                    <td>{{materiel.designMateriel}}</td>
-                    <td>{{materiel.puMateriel | money:' FCFA'}}</td>
-                    <td>
-                      <img class="image-table img-fluid img-thumbnail rounded" [src]="this.materielService.baseUrl+'/downloadFile/'+materiel.fileName | secure | async"
-                      (click)="showImageMateriel(materiel.fileName, materiel.description)"/>
-                      
-                      <!-- <div class="clickable" (click)="onDownloadFile(materiel.fileName)">Image</div>
+        </div>
+        <div class="alert alert-primary" *ngIf="hide">
+          <strong>Chargement ...</strong>
+        </div>
+        <div class="alert alert-success alert-dismissible show fade" *ngIf="errorMessage">
+          <strong>{{ errorMessage }}</strong>
+          <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="card-body" *ngIf="!hide">
+          <!--card body-->
+          <table class="table table-striped table-hover table-sm">
+            <thead class="thead-dark">
+              <tr class="content-table-center">
+                <th>Reférence</th>
+                <th>Désignation</th>
+                <th>Prix Unitaire</th>
+                <th>Photo</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tr class="content-table-center" *ngFor="let materiel of _materiels; let i=index;">
+              <td>{{materiel.refMateriel}}</td>
+              <td>{{materiel.designMateriel}}</td>
+              <td>{{materiel.puMateriel | money:' FCFA'}}</td>
+              <td>
+                <!-- <img class="image-table img-fluid img-thumbnail rounded"
+                  [src]="this.materielService.baseUrl+'/downloadFile/'+materiel.fileName | secure | async"
+                  (click)="showImageMateriel(materiel.fileName, materiel.description)" /> --> 
+
+                <!-- <div class="clickable" (click)="onDownloadFile(materiel.fileName)">Image</div>
                       <img class="image-table img-fluid img-thumbnail rounded" [src]="file"/> -->
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-light" (click)="onViewMateriel(materiel.refMateriel)">View</button>&nbsp;
-                      <button class="btn btn-sm btn-light">Edit</button>&nbsp;
-                      <button class="btn btn-sm btn-light" (click)="onDeleteMateriel(materiel.refMateriel)">Delete</button>
-                    </td>
-                  </tr>
-                </table>    
-                <!--begin top Pagination-->
-              <!--<nav>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-light" (click)="onViewMateriel(materiel.refMateriel)">View</button>&nbsp;
+                <button class="btn btn-sm btn-light" data-toggle="modal" data-target="#myModal" (click)="onGetMateriel(materiel.refMateriel)">
+                  Edit
+                </button>
+                &nbsp;
+                <button class="btn btn-sm btn-light" (click)="onDeleteMateriel(materiel.refMateriel)">Delete</button>
+                <!-- <button class="btn btn-sm btn-light" data-toggle="modal" data-target="#myModal">Delete</button> -->
+                <!--Modal delete-->
+                <!-- <div class="modal" id="myModal">
+                  <diV class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header bg-danger">
+                        <h4><strong>Warning Message</strong></h4> -->
+                <!-- <button type="button" data-dismiss="modal" class="close">
+                          <span>&times;</span>
+                        </button> -->
+                <!-- </div>
+                      <div class="modal-body">
+                        <p>Voulez-vous vraiment supprimer le matériel  {{ materiel.refMateriel }} ?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-sm btn-light" (click)="onDeleteMateriel(materiel.refMateriel)" data-dismiss="modal">
+                          Oui
+                        </button>
+                        &nbsp;
+                        <button class="btn btn-sm btn-light" data-dismiss="modal">Non</button>
+                      </div>
+                    </div>
+                  </diV>
+                </div> -->
+                <!--End Modal delete-->
+              </td>
+            </tr>
+          </table>
+          <!--begin top Pagination-->
+          <!--<nav>
                 <ul class="pagination justify-content-center">
                   <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
                   <li class="page-item active"><a class="page-link bg-dark" href="#">1</a></li>
@@ -52,55 +86,117 @@
                   <li class="page-item"><a class="page-link" href="#">3</a></li>
                   <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                 </ul>
-              </nav> -->   
-          </div><!--end card body-->  
+              </nav> -->
+        </div>
+        <!--end card body-->
 
-          <div class="card-footer"><!--card footer-->  
-            <div class="row">
-              <div class="col-12">
-                <nav> <!--begin top Pagination-->
-                    <ul class="pagination justify-content-md-center">
-                        <li class="page-item" [ngClass]="{ 'disabled':page==0  }"><a class="page-link" href="#">&laquo;</a></li>
-                        <div *ngFor="let p of pages; let i = index">
-                            <li class="page-item bg-dark" [ngClass]="{ 'active':i==page }">
-                                <a class="page-link" href="" (click)="onChangePage(i,$event)" >{{ i }}</a>
-                            </li>
-                        </div>
-                        <li class="page-item" [ngClass]="{ 'disabled':page==totalPages }"><a class="page-link" href="#">&raquo;</a></li>
-                    </ul>
-                </nav><!--end top Pagination-->   
-              </div><br/>  
+        <div class="card-footer">
+          <!--card footer-->
+          <div class="row">
+            <div class="col-12">
+              <nav>
+                <!--begin top Pagination-->
+                <ul class="pagination justify-content-md-center">
+                  <!-- <li class="page-item" [ngClass]="{ 'disabled':page==0  }"><a class="page-link" href="#">&laquo;</a>
+                  </li> -->
+                  <div *ngFor="let p of pages; let i = index">
+                    <li class="page-item bg-dark" [ngClass]="{ 'active':i==page }">
+                      <a class="page-link" href="" (click)="onChangePage(i,$event)">{{ i }}</a>
+                    </li>
+                  </div>
+                  <!-- <li class="page-item" [ngClass]="{ 'disabled':page==totalPages }"><a class="page-link"
+                      href="#">&raquo;</a></li> -->
+                </ul>
+              </nav>
+              <!--end top Pagination-->
+            </div><br />
 
-              <div class="col-12">
-                  <button class="btn btn-dark" (click)="onNewMateriel()"><!--button nouveau-->
-                      Nouveau
-                    <span><i class="fas fa-plus"></i></span>
-                  </button> <!--end button nouveau-->
-              </div>
-            </div>  
-          </div><!--end card footer-->  
-        </div><!--end card-->
-  </div>
-  <div class="col-md-3 mt-3">
-        <section class="card" *ngIf="imageExist">
-          <img (click)="onHideCard()" class="card-img-top" [src]="this.materielService.baseUrl+'/downloadFile/'+fileName | secure | async"/>
-          <div class="card-body">
-            <h3 class="card-title">{{ name }}</h3>
-            <p class="card-text">
-              {{ description }}
-            </p>
-            <button href="#" class="btn btn-sm btn-dark">Voir détail</button><br/>
+            <div class="col-12">
+              <button class="btn btn-dark" (click)="onNewMateriel()">
+                <!--button nouveau-->
+                Nouveau
+                <span><i class="fas fa-plus"></i></span>
+              </button>
+              <!--end button nouveau-->
+            </div>
           </div>
-        </section>
-  </div>
-</div><br/>
-<div class="row">
-  <div class="col-md-12">
-    <!-- <button class="btn btn-dark">
+        </div>
+        <!--end card footer-->
+      </div>
+      <!--end card-->
+    </div>
+    <div class="col-md-3 mt-3">
+      <section class="card" *ngIf="imageExist">
+        <img (click)="onHideCard()" class="card-img-top"
+          [src]="this.materielService.baseUrl+'/downloadFile/'+fileName | secure | async" />
+        <div class="card-body">
+          <h3 class="card-title">{{ name }}</h3>
+          <p class="card-text">
+            {{ description }}
+          </p>
+          <button href="#" class="btn btn-sm btn-dark">Voir détail</button><br />
+        </div>
+      </section>
+    </div>
+  </div><br />
+  <div class="row">
+    <div class="col-md-12">
+      <!-- <button class="btn btn-dark">
       Nouveau
     <span><i class="fas fa-plus"></i></span>
   </button>   -->
+    </div>
   </div>
-</div>
-    
+
+  <!--Modal-->
+
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="materielToUpdateForm"  (ngSubmit)="onUpdateMateriel(materielToUpdateForm.value)"> 
+          <!--Modal-header-->
+          <div class="modal-header-center bg-dark" [hidden]="isUpdated">
+            <h3 class="modal-title" style="color:white; text-align: center;"><strong>Modification Matériel</strong> </h3>
+          </div>
+
+          <!--Modal-body-->
+          <div class="modal-body" *ngFor="let maToUp of materielsToUpdate">
+            <div [hidden]="isUpdated">
+              <input type="hidden" class="form-control"  formControlName="refMateriel" [(ngModel)]="maToUp.refMateriel">
+              <div class="form-group">
+                <label for="designMateriel"><strong>Désignation</strong></label>
+                <input type="text" id="designMateriel" class="form-control" formControlName="designMateriel" [(ngModel)]="maToUp.designMateriel">
+              </div>
+              <div class="form-group">
+                <label for="puMateriel"><strong>Prix</strong></label>
+                <input type="text" id="puMateriel" class="form-control" formControlName="puMateriel" [(ngModel)]="maToUp.puMateriel">
+              </div>
+              <div class="form-group">
+                <label><strong>Photo</strong></label><br />
+                <p style="color:darkcyan">{{ fileNameNoUpdated }}</p>
+                <input type="file" accept="image/*" (change)="detectFile($event)">
+                <p class="text-success" *ngIf="fileIsUploading">Fichier chargé !</p>
+                
+              </div>
+              <div class="form-group">
+                  <label for="description"><strong>Description</strong></label>
+                  <textarea id="description" rows="3" class="form-control" formControlName="description" [(ngModel)]="maToUp.description"></textarea>
+                </div>
+              
+            </div>
+          </div>
+          <div [hidden]="!isUpdated">
+              <h4 style="color: green; text-align: center;">Matériel  Modifié avec succès!</h4>
+          </div> 
+          <!--Modal-footer-->
+          <div class="modal-footer">
+            <button class="btn btn-success" [hidden]="isUpdated">Sauvegarder</button>
+            <button class="btn btn-danger" data-dismiss="modal" (click)="onChangeIsUpdated()">Fermer</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
 </div>

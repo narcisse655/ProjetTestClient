@@ -6,34 +6,49 @@
         <div class="card-header bg-primary text-center bg-dark color-title-card">
           <h4><strong>Authentification</strong></h4>
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+        <div class="alert alert-danger alert-dismissible show fade" *ngIf="errorMessage">
           <div class="text-center">
             <strong>{{ errorMessage }}</strong>
           </div>
+          <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+          </button>
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="materielList.error">
+        <div class="alert alert-danger alert-dismissible show fade" *ngIf="materielList.error">
           <div class="text-center">
             <strong>{{ materielList.error }}</strong>
+            <button type="button" class="close" data-dismiss="alert">
+              <span>&times;</span>
+            </button>
           </div>
         </div>
-        <div class="card-body">
+        <section class="card-body">
           <form [formGroup]="signInForm" (ngSubmit)="onSignIn(signInForm.value)">
             <div class="form-group">
               <label for="username" class="control-label"><strong>Username</strong></label>
-              <input type="text" id="username" class="form-control" formControlName="username" (click)="onHideMessage()">
+              <input type="text" id="username" class="form-control" formControlName="username" data-toggle="tooltip"
+                data-placement="right" title="Enter username">
+              <div class="alert alert-danger" *ngIf="(Username.touched) && (Username.invalid)" style="margin-top: 5px;">
+                <span>username is Required</span>
+              </div>
             </div>
+            <!-- *ngIf="Username.errors.required" -->
             <div class="form-group">
-              <label for="password" class="control-label"><strong>password</strong></label>
-              <input type="password" id="password" class="form-control" formControlName="password" (click)="onHideMessage()">
+              <label for="password" class="control-label"><strong>Password</strong></label>
+              <input type="password" id="password" class="form-control" formControlName="password" data-toggle="tooltip"
+                data-placement="right" title="Enter password">
+              <div class="alert alert-danger" *ngIf="(Password.touched) && (Password.invalid)" style="margin-top: 5px;">
+                <span>password is Required</span>
+              </div>
             </div>
             <div (click)="onHideMessage()">
               <button type="submit" class="btn btn-dark" [disabled]="signInForm.invalid">Connexion</button>
             </div>
-            
-            
+
+
             <!-- <button type="button" class="btn btn-dark" (click)="goToRegister()">Créer un compte</button> -->
           </form>
-        </div>
+        </section>
       </div>
     </div>
     <div class="col-md-3">&nbsp;</div>

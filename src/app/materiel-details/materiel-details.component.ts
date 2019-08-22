@@ -26,7 +26,7 @@ export class MaterielDetailsComponent implements OnInit {
         this.fileName = splitChaine[0]; */
       },
       (error)=>{
-        console.log(error.error.message);
+        console.log(error);
       }
     );
   }

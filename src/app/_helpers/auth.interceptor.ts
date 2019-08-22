@@ -27,10 +27,10 @@ export class AuthInterceptor implements HttpInterceptor {
             request = request.clone({
                 headers: request.headers.set('Bearer', this.authService.getToken())
             })  */
-        } else {
+        }/*  else {
             this.router.navigate(['login']);
             console.log('Redirect to login ...');
-        }
+        } */
 
         console.log("sortie AuthInterceptor...");
 

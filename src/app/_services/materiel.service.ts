@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpEvent, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Materiel } from '../model/Materiel';
+import { Observable, Subject } from 'rxjs';
+import { Materiel } from '../model/Materiel'; 
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +9,15 @@ import { Materiel } from '../model/Materiel';
 export class MaterielService {
 
   public baseUrl = 'http://localhost:8081/api/v1';
-  //private jwtToken: string = null;
- 
-  constructor(private httpClient: HttpClient) { }
 
-  /* loadJwtToken(){
-    this.jwtToken = localStorage.getItem('token');
-  } */
+  constructor(private httpClient: HttpClient) { }
   
-  getMateriel(id:number): Observable<any>{
-    return this.httpClient.get(this.baseUrl+'/materiels/'+id);
+  getMateriel(id:number): Observable<Materiel>{
+    return this.httpClient.get<Materiel>(this.baseUrl+'/materiels/'+id);
+  }
+
+  getMateriels(id:number): Observable<any>{
+    return this.httpClient.get(this.baseUrl+'/materiels/list/'+id);
   }
 
   getMaterielsList(): Observable<any>{
@@ -27,7 +26,7 @@ export class MaterielService {
 
   getMaterielsListByPage(page: number){
     //if (this.jwtToken==null) this.loadJwtToken()
-    return this.httpClient.get(this.baseUrl+'/materiels/list?page='+page, 
+    return this.httpClient.get(this.baseUrl+'/materiels/list?page='+page
     //{headers: new HttpHeaders({'Authorization': this.jwtToken})}
     );
   }
@@ -37,7 +36,7 @@ export class MaterielService {
   }
 
   updateMateriel(id:number, value:any): Observable<Object>{
-    return this.httpClient.put(this.baseUrl+'/materiels/'+id, value);
+    return this.httpClient.put(this.baseUrl+'/materiels/'+id, value, {observe: 'body'});
   }
 
   deleteMateriel(id:number): Observable<any>{
@@ -51,7 +50,12 @@ export class MaterielService {
     return this.httpClient.post(this.baseUrl+'/uploadFile', formData);
   }
 
+  deleteFile(fileName: string): Observable<any>{
+    return this.httpClient.delete(this.baseUrl+'/file/delete/'+fileName, {responseType: 'text'});
+  }
 
+
+  //Unused
   getFiles(): Observable<any>{
     return this.httpClient.get(this.baseUrl+'/files');
   }

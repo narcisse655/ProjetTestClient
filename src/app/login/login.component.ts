@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     if (this.authService.getToken() && localStorage.getItem('currentUser')) {
       this.router.navigate(['materiels']);
     }
-  }
+  } 
 
   ngOnInit() {  
     console.log('LoginComponent is create');
@@ -45,7 +45,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  get Username(){
+    return this.signInForm.get('username');
+  }
+
+  get Password(){
+    return this.signInForm.get('password');
+  }
+
   onSignIn(user) {
+    console.log("Connexion ...");
     console.log(user);
     this.authService.sigIn(user)
       .subscribe(

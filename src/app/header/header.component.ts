@@ -4,7 +4,7 @@ import { AuthenticationService, MaterielService } from '@app/_services';
 import { MaterielListComponent } from '@app/materiel-list/materiel-list.component';
 import { Users } from '@app/model/Users';
 import { RoleUtils } from '@app/model/RoleUtils';
-import { Role } from '@app/model/Role';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ import { Role } from '@app/model/Role';
 })
 export class HeaderComponent implements OnInit {
 
-  currentUser: Users
+  currentUser: Users;
 
 
   constructor(private router: Router, private authService: AuthenticationService,
@@ -63,17 +63,21 @@ export class HeaderComponent implements OnInit {
   get isAdmin() {
     let resp;
     let roles = this.currentUser.roleList;
-    console.log('Current user roles: ' + JSON.stringify(roles));
+    let i=0;
+    //console.log('Current user roles: ' + JSON.stringify(roles));
     for (let role of roles) {
-      if (role.roleName === RoleUtils.Admin) {
+      //console.log('Entrée dans le tableau des roles ...')
+      if (role.roleName == RoleUtils.Admin) {
         resp = true;
+        break;
       }else{
         resp = false;
       }
     }
-    console.log('Admin?: ' + resp);
+    //console.log('Admin?: ' + resp);
     return resp;
     //return this.currentUser && this.currentUser.roleList[0].roleName === RoleUtils.Admin;
   }
+
 
 }
