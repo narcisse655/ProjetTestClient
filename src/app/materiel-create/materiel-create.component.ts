@@ -19,6 +19,7 @@ export class MaterielCreateComponent implements OnInit {
   fileData:  {fileName:"", fileDownloadUri:"", fileType:"", size:undefined};
   materiel: Materiel= new Materiel("", undefined, "", "");
   fileName: string;
+  fileNoUploaded: boolean = false;
 
   constructor( private formBuilder: FormBuilder , 
     private materielService: MaterielService,
@@ -80,7 +81,9 @@ export class MaterielCreateComponent implements OnInit {
         }
       },
       (error) => {
-        console.log(error);
+        this.fileNoUploaded = true;
+        console.log( ' this.fileNoUploaded = '+this.fileNoUploaded);
+        console.log(error.error.message);
       }
     );
   }

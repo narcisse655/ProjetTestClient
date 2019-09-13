@@ -35,12 +35,9 @@
               <td>{{materiel.designMateriel}}</td>
               <td>{{materiel.puMateriel | money:' FCFA'}}</td>
               <td>
-                <!-- <img class="image-table img-fluid img-thumbnail rounded"
+                <img class="image-table img-fluid img-thumbnail rounded"
                   [src]="this.materielService.baseUrl+'/downloadFile/'+materiel.fileName | secure | async"
-                  (click)="showImageMateriel(materiel.fileName, materiel.description)" /> --> 
-
-                <!-- <div class="clickable" (click)="onDownloadFile(materiel.fileName)">Image</div>
-                      <img class="image-table img-fluid img-thumbnail rounded" [src]="file"/> -->
+                  (click)="showImageMateriel(materiel.fileName, materiel.description)" />
               </td>
               <td>
                 <button class="btn btn-sm btn-light" (click)="onViewMateriel(materiel.refMateriel)">View</button>&nbsp;
@@ -48,45 +45,10 @@
                   Edit
                 </button>
                 &nbsp;
-                <button class="btn btn-sm btn-light" (click)="onDeleteMateriel(materiel.refMateriel)">Delete</button>
-                <!-- <button class="btn btn-sm btn-light" data-toggle="modal" data-target="#myModal">Delete</button> -->
-                <!--Modal delete-->
-                <!-- <div class="modal" id="myModal">
-                  <diV class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header bg-danger">
-                        <h4><strong>Warning Message</strong></h4> -->
-                <!-- <button type="button" data-dismiss="modal" class="close">
-                          <span>&times;</span>
-                        </button> -->
-                <!-- </div>
-                      <div class="modal-body">
-                        <p>Voulez-vous vraiment supprimer le matériel  {{ materiel.refMateriel }} ?</p>
-                      </div>
-                      <div class="modal-footer">
-                        <button class="btn btn-sm btn-light" (click)="onDeleteMateriel(materiel.refMateriel)" data-dismiss="modal">
-                          Oui
-                        </button>
-                        &nbsp;
-                        <button class="btn btn-sm btn-light" data-dismiss="modal">Non</button>
-                      </div>
-                    </div>
-                  </diV>
-                </div> -->
-                <!--End Modal delete-->
+                <button class="btn btn-sm btn-light"  [hidden]="!isAdmin" (click)="onDeleteMateriel(materiel.refMateriel)">Delete</button>
               </td>
             </tr>
           </table>
-          <!--begin top Pagination-->
-          <!--<nav>
-                <ul class="pagination justify-content-center">
-                  <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item active"><a class="page-link bg-dark" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
-              </nav> -->
         </div>
         <!--end card body-->
 

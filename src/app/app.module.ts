@@ -13,7 +13,8 @@ import { FileListComponent } from './file-list/file-list.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MaterielService, AuthenticationService, UsersService } from './_services';
-import { AuthInterceptor, MoneyPipe, SecurePipe, ErrorInterceptor } from './_helpers';
+import { AuthInterceptor, MoneyPipe, SecurePipe, ErrorInterceptor, UsersStatutPipe } from './_helpers';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import { AuthInterceptor, MoneyPipe, SecurePipe, ErrorInterceptor } from './_hel
     LoginComponent,
     RegisterComponent,
     MoneyPipe,
-    SecurePipe
+    SecurePipe,
+    UsersStatutPipe,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

@@ -11,10 +11,11 @@ export class ErrorInterceptor implements HttpInterceptor {
     constructor(private authService: AuthenticationService, private router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('Event HttpResponse...');
+        console.log('Intercept request...');
         return next.handle(request).pipe( 
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
+                    console.log('Event HttpResponse...');
                     //console.log('Current Users: '+this.authService.currentUser);
                     console.log('Event:==>> ', event);
                 }
@@ -22,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             }),
             catchError(
                 (err: HttpErrorResponse) => {
-                    //console.log('Entree HttpErrorResponse...');
+                    console.log('CatchError HttpErrorResponse...');
                     //if(!this.authService.getAuth()){
                     //console.log(this.authService.currentUsers);
                     let currentUser = localStorage.getItem('currentUser');

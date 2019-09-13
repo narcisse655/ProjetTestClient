@@ -79,5 +79,9 @@ export class HeaderComponent implements OnInit {
     //return this.currentUser && this.currentUser.roleList[0].roleName === RoleUtils.Admin;
   }
 
+  goToUsers(){
+    this.router.navigate(['users']);
+  }
+
 
 }

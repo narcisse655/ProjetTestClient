@@ -28,7 +28,7 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  sigIn(user) {
+  signIn(user) {
     return this.httpClient
       .post(this.host + '/login', user, { observe: 'response' })
       .pipe(
